@@ -25,8 +25,25 @@ app.get("/beasts/random", (req, res) => {
 });
 
 app.get("/beasts/:id", (req, res) => {
+
+   if (0 <= req.params.id && req.params.id < beasts.length) {
     const filtered = beasts.filter(b => b.id == req.params.id);
     res.send(filtered[0]);
+   } else {
+    res.status(404).send({error: "You messed up!"});
+   }
+
+    // const id = Number(req.params.id);
+
+    // if (id >= beasts.length || id < 0) {
+    //     res.status(400).send({ error:"This beast is extinct." });
+    // } else if (typeof id != 'Number') {
+    //     res.status(400).send({error: "That's not a number you absolute buffoon"});
+    // } else {
+    //     const filtered = beasts.filter(b => b.id == id);
+    //     res.send(filtered[0]);
+    // }
+
 });
 
 app.post("/beasts", (req, res) => {
