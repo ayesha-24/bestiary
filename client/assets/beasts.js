@@ -25,3 +25,7 @@ displayNewInfo("dangerRating");
 displayNewInfo("description");
 displayNewInfo("encounterRate");
 displayNewInfo("loot");
+
+// async function deleteBeast(e) {
+//     e.preventDefault()
+// }
