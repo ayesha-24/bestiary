@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 
 const beasts = require("./beasts");
+const logRoute = require("./route-logger");
 
 // Make a basic server
 const app = express();
@@ -9,6 +10,9 @@ const app = express();
 app.use(cors());
 // Tell Express to always read the body of POST requests
 app.use(express.json());
+
+//Add middleware to log routes
+app.use(logRoute);
 
 // Set up the server routes
 app.get("/", (req, res) => {
@@ -26,24 +30,34 @@ app.get("/beasts/random", (req, res) => {
 
 app.get("/beasts/:id", (req, res) => {
 
-   if (0 <= req.params.id && req.params.id < beasts.length) {
-    const filtered = beasts.filter(b => b.id == req.params.id);
-    res.send(filtered[0]);
-   } else {
-    res.status(404).send({error: "You messed up!"});
-   }
+    try { //Attempt to do something - stop if there's an error
 
-    // const id = Number(req.params.id);
+        // Convert the id into an int (which possibly makes a NaN)
+        const id = parseInt(req.params.id);
 
-    // if (id >= beasts.length || id < 0) {
-    //     res.status(400).send({ error:"This beast is extinct." });
-    // } else if (typeof id != 'Number') {
-    //     res.status(400).send({error: "That's not a number you absolute buffoon"});
-    // } else {
-    //     const filtered = beasts.filter(b => b.id == id);
-    //     res.send(filtered[0]);
-    // }
+        // If the if is a NaN or other bad value
+        if (isNaN(id)) {
 
+            // Exit the try, because we found a problem
+            throw "Invalid input!"
+
+            // If the id is outside the reasonable boundaries
+        } else if (id < 0 || id >= beasts.length) {
+
+            // Exit the try because we found a problem
+            throw "No such beast!"
+        }
+
+        // If everything is fine, just return the relevant beast
+        const filtered = beasts.filter(b => b.id == req.params.id);
+        res.send(filtered[0]);
+    
+    // If there was a problem anywhere in the try, take the error information
+    } catch (e) {
+
+        // Send a response explaining the issue
+        res.status(404).send({error: e});
+    }
 });
 
 app.post("/beasts", (req, res) => {

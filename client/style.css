@@ -1,32 +1,31 @@
-*{
-    font-family: 'Cinzel', serif;
-    list-style-position:inside;
-    text-align: center;
-    font-size: 30px;
-    border-radius: 20%;
+* {
+  font-family: "Cinzel", serif;
+  list-style-position: inside;
+  text-align: center;
+  font-size: 30px;
+  border-radius: 20%;
 }
 
 body {
-    background-image: url(https://greektraveltellers.com/images/Blog/Monsters%20in%20Greek%20Mythology/Monsters-of-Greek-Mythology.jpg);
+  background-image: url(https://greektraveltellers.com/images/Blog/Monsters%20in%20Greek%20Mythology/Monsters-of-Greek-Mythology.jpg);
 }
 
 h1 {
-    font-size: 40px;
+  font-size: 40px;
 }
 
-li{
-    padding: 20px 20px;
+li {
+  padding: 20px 20px;
 }
 
 div {
-    background-color: beige;
-    opacity: 0.9;
-    margin: 0 400px;
+  background-color: beige;
+  opacity: 0.9;
+  margin: 0 400px;
 }
 
-li:hover{
-    color: crimson;
-    font-weight: bold;
-    text-shadow: 2px 2px rgb(103, 11, 29);
-    
+li:hover {
+  color: crimson;
+  font-weight: bold;
+  text-shadow: 2px 2px rgb(103, 11, 29);
 }
