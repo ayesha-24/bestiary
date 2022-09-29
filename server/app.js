@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 
-const beasts = require("./beasts");
+let beasts = require("./beasts");
 const logRoute = require("./route-logger");
 
 // Make a basic server
@@ -71,10 +71,25 @@ app.post("/beasts", (req, res) => {
   res.status(201).send(newBeast);
 });
 
-app.delete("beasts/:id", (req, res) => {
-  const id = parseInt(req.params.id);
-  beasts = beasts.filter((b) => b.id != id);
-  res.send({ message: "Beast banished." });
+// app.delete("beasts/:id", (req, res) => {
+//   const id = parseInt(req.params.id);
+//   const beasts = beasts.filter((b) => b.id != id);
+//   res.send({ message: "Beast banished." });
+// });
+
+app.delete("/beasts/:id", (req, res) => {
+  // get the id out of the URL:
+  const deleteId = parseInt(req.params.id);
+  // find method to see if bests contains an element with the id
+  const deleted = beasts.find((beast) => beast.id === deleteId);
+  if (deleted) {
+    // if "deleted" exists, filter beasts and only get ones who's id doesn't match the one to delete
+    beasts = beasts.filter((beast) => beast.id !== deleteId);
+    // return deleted beast
+    res.status(200).json(deleted);
+  } else {
+    res.status(404).json({ message: "Beast does not exist" });
+  }
 });
 
 module.exports = app;
